@@ -17,12 +17,12 @@ function MyApp({ Component, pageProps }) {
               Mint and Sell Assets
             </a>
           </Link>
-          <Link href="/create-item">
+          <Link href="/my-items">
             <a className='mr-4 text-pink-500'>
               My Asset Collection
             </a>
           </Link>
-          <Link href="/creator-dashbord">
+          <Link href="/creator-dashboard">
             <a className='mr-4 text-pink-500'>
               Creator Dashboard
             </a>
