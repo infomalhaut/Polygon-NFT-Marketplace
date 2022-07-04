@@ -59,3 +59,8 @@ PS D:\DeFi\polygon-nft-marketplace>
 Nonce error - reset account (https://medium.com/@thelasthash/solved-nonce-too-high-error-with-metamask-and-hardhat-adc66f092cd)
 
 deploy contract again when starting hardhat node - contract address will be same (localhost network )
+
+https://docs.cloud.coinbase.com/wallet-sdk/docs/web3modal - connect wallet
+
+
+npm cache clean -f

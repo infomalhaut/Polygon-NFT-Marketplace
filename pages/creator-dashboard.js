@@ -1,13 +1,14 @@
 import { ethers } from "ethers";
 import axios from 'axios';
 import Web3Modal from 'web3modal'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { nftContractAddress, nftMarketplaceAddress } from "../config"
 
 //abi
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
+import AuthContext from "../stores/authContext";
 
 export default function CreatorDashboard(){
     const [nfts, setNfts] = useState([])
@@ -15,21 +16,24 @@ export default function CreatorDashboard(){
 
     const [loadingState,setLoadingState]=useState('not-loaded')
     useEffect(()=>{
+        //val.walletConnect()
         loadNFTs()
     },[])
+    const val = useContext(AuthContext)
+
 
     async function loadNFTs(){
-        const web3Modal = new Web3Modal()
-        const connection = await web3Modal.connect()
-        const provider = new ethers.providers.Web3Provider(connection)
-        const signer = provider.getSigner()
+        // const web3Modal = new Web3Modal()
+        // const connection = await web3Modal.connect()
+        // const provider = new ethers.providers.Web3Provider(connection)
+        // const signer = provider.getSigner()
 
-        const tokenContract = new ethers.Contract(nftContractAddress,NFT.abi,provider)
-        const marketContract = new ethers.Contract(nftMarketplaceAddress,NFTMarketplace.abi,signer)
+        const tokenContract = new ethers.Contract(nftContractAddress,NFT.abi,val.provider0)
+        const marketContract = new ethers.Contract(nftMarketplaceAddress,NFTMarketplace.abi,val.signer0)
     
         //get data
         const data = await marketContract.fetchMyNFTs()
-         console.log(data, marketContract.address)
+        //  console.log(data, marketContract.address)
         
         const items = await Promise.all(data.map(async i => {
           const tokenUri = await tokenContract.tokenURI(i.tokenId)

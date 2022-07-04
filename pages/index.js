@@ -2,24 +2,30 @@ import styles from '../styles/Home.module.css'
 import { ethers } from 'ethers'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
-import { useState,useEffect } from 'react'
+import { useState,useEffect, useContext } from 'react'
 
 import { nftContractAddress,nftMarketplaceAddress } from '../config'
 
 //abi
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
+import AuthContext from '../stores/authContext'
 
 export default function Home() {
   const [nfts,setNfts] = useState([])
   const [loadingState, setLoadingState]=useState('not loaded')
+  
+  const val = useContext(AuthContext)
+  console.log(val.address0, val.isConnected, val.provider0, val.signer0)
 
   useEffect(()=>{
+    val.walletConnect()
     loadNFTs()
   },[])
 
   async function loadNFTs(){
     const provider = new ethers.providers.JsonRpcProvider()
+    //const provider = val.provider0
     const tokenContract = new ethers.Contract(nftContractAddress,NFT.abi,provider)
     const marketContract = new ethers.Contract(nftMarketplaceAddress,NFTMarketplace.abi,provider)
 
@@ -66,6 +72,7 @@ export default function Home() {
   return (
     <div className='flex justify-center'>
       <div className='px-4' style={{maxWidth: '1600px'}}>
+        {!val.isConnected && <div className='text-center font-bold text-3xl bg-[#e93f80] text-black m-3 bg-contain p-2 mx-auto rounded-full'>Connect your Wallet to unlock the full marketplace</div>}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
           {
             nfts.map((nft,i)=>(
