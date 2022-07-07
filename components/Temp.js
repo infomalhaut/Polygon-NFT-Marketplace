@@ -1,9 +1,6 @@
 import React from "react";
 import Link from 'next/link' //To link pages to components
-import Web3Modal from 'web3modal'
 import { useEffect, useState,useContext } from 'react'
-import { ethers } from 'ethers'
-import { NavButton } from './NavButton'
 import AuthContext from '../stores/authContext'
 
 const Temp=()=>{

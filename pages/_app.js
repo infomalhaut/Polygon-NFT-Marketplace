@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 
 import { AuthContextProvider } from '../stores/authContext'
-import Temp from '../comps/Temp'
+import Temp from '../components/Temp'
 
 
 function MyApp({ Component, pageProps }) {
